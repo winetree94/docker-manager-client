@@ -8,23 +8,22 @@ import {
 import Authentication from '../authentication/authentication';
 import Login from '../authentication/login';
 import Navigation from '../navigation/navigation';
-import { Main } from '../main/main';
+import DashboardRoute from '../main/main';
 
 export class Routes extends React.Component {
   render(): React.ReactNode {
     return (
       <Router>
         <Switch>
-          <Route path="/authentication">
-            <Authentication></Authentication>
-          </Route>
-          <Route path="/login">
-            <Login></Login>
-          </Route>
           <Route exact path="/">
             <Redirect to="/dashboard" />
           </Route>
-          <Main path="/dashboard" component={Navigation} />
+          <Route path="/authentication" component={Authentication} />
+          <Route path="/login" component={Login} />
+          <DashboardRoute path="/dashboard" component={Navigation} />
+          <Route path="*">
+            <Redirect to="/dashboard" />
+          </Route>
           {/* <Main path="/dashboard" component={Dashboard} checkAuthentication={true} /> */}
           {/* <Main path="*" component={NotFound} checkAuthentication={false} /> */}
         </Switch>

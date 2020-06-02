@@ -201,4 +201,4 @@ const MainContainer: React.StatelessComponent<IMainContainerProps> = (
   );
 };
 
-export const Main = MainContainer;
+export default MainContainer;
