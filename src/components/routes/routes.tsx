@@ -5,6 +5,8 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
+import Authentication from '../authentication/authentication';
+import Login from '../authentication/login';
 import Navigation from '../navigation/navigation';
 import { Main } from '../main/main';
 
@@ -13,10 +15,16 @@ export class Routes extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/">
-            <Redirect to="/home" />
+          <Route path="/authentication">
+            <Authentication></Authentication>
           </Route>
-          <Main path="/home" component={Navigation} />
+          <Route path="/login">
+            <Login></Login>
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/dashboard" />
+          </Route>
+          <Main path="/dashboard" component={Navigation} />
           {/* <Main path="/dashboard" component={Dashboard} checkAuthentication={true} /> */}
           {/* <Main path="*" component={NotFound} checkAuthentication={false} /> */}
         </Switch>
