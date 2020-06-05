@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
+import { login } from '../../requests/authentication';
 
 const Copyright = (): JSX.Element => (
   <Typography variant="body2" color="textSecondary" align="center">
@@ -44,8 +46,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export interface LoginComponentState {
+  email: string;
+  password: string;
+  isLoading: boolean;
+}
+
+export function LoginComponent(): JSX.Element {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const classes = useStyles();
+
+  function onSubmit(e: React.FormEvent<HTMLFormElement>): void {
+    e.preventDefault();
+    login({ email: email, password: password })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.error(e);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          console.log('spinner');
+        });
+      });
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -57,7 +83,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -67,6 +93,7 @@ export default function SignIn() {
             label="Email Address"
             name="email"
             autoComplete="email"
+            value={setEmail}
             autoFocus
           />
           <TextField
@@ -78,6 +105,7 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
+            value={setPassword}
             autoComplete="current-password"
           />
           <FormControlLabel

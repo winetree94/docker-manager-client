@@ -6,7 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import Authentication from '../authentication/authentication';
-import Login from '../authentication/login';
+import { LoginComponent } from '../authentication/login';
 import Navigation from '../navigation/navigation';
 import DashboardRoute from '../main/main';
 
@@ -19,7 +19,7 @@ export class Routes extends React.Component {
             <Redirect to="/dashboard" />
           </Route>
           <Route path="/authentication" component={Authentication} />
-          <Route path="/login" component={Login} />
+          <Route path="/login" component={LoginComponent} />
           <DashboardRoute path="/dashboard" component={Navigation} />
           <Route path="*">
             <Redirect to="/dashboard" />
