@@ -8,7 +8,7 @@ import {
 import Authentication from '../authentication/authentication';
 import { LoginComponent } from '../authentication/login';
 import Navigation from '../navigation/navigation';
-import DashboardRoute from '../main/main';
+import { DashboardRoute } from '../main/main';
 
 export class Routes extends React.Component {
   render(): React.ReactNode {
@@ -20,7 +20,11 @@ export class Routes extends React.Component {
           </Route>
           <Route path="/authentication" component={Authentication} />
           <Route path="/login" component={LoginComponent} />
-          <DashboardRoute path="/dashboard" component={Navigation} />
+          <DashboardRoute
+            path="/dashboard"
+            title="dashboard"
+            component={Navigation}
+          />
           <Route path="*">
             <Redirect to="/dashboard" />
           </Route>

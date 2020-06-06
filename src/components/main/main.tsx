@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
+import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,6 +21,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { Button } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -84,17 +86,16 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 }));
-// import { Navigation, Footer } from 'components';
-// import * as userActionCreators from '../../redux/modules/users/users';
 
 interface IMainContainerProps {
   component: any;
+  title: string;
   path?: string;
   exact?: boolean;
   // checkAuthentication: boolean;
 }
 
-const MainContainer: React.StatelessComponent<IMainContainerProps> = (
+export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (
   props
 ) => {
   const classes = useStyles();
@@ -110,13 +111,12 @@ const MainContainer: React.StatelessComponent<IMainContainerProps> = (
   };
 
   const { component: Component, ...rest } = props;
+
   return (
     <Route
       {...rest}
       render={(matchProps) => (
         <div className="wrapper">
-          {/* <Navigation history={matchProps.history} /> */}
-
           <div className={classes.root}>
             <CssBaseline />
             <AppBar
@@ -137,9 +137,31 @@ const MainContainer: React.StatelessComponent<IMainContainerProps> = (
                 >
                   <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap>
-                  Mini variant drawer
-                </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="stretch"
+                >
+                  <Typography variant="h6" noWrap>
+                    {rest.title}
+                  </Typography>
+                  <Grid
+                    item
+                    xs={6}
+                    container
+                    direction="row"
+                    justify="flex-end"
+                    alignItems="stretch"
+                  >
+                    <IconButton color="inherit" aria-label="open drawer">
+                      <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap>
+                      {rest.title}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Toolbar>
             </AppBar>
             <Drawer
@@ -200,5 +222,3 @@ const MainContainer: React.StatelessComponent<IMainContainerProps> = (
     />
   );
 };
-
-export default MainContainer;
