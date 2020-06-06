@@ -92,7 +92,6 @@ interface IMainContainerProps {
   title: string;
   path?: string;
   exact?: boolean;
-  // checkAuthentication: boolean;
 }
 
 export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (
@@ -157,9 +156,6 @@ export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (
                     <IconButton color="inherit" aria-label="open drawer">
                       <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" noWrap>
-                      {rest.title}
-                    </Typography>
                   </Grid>
                 </Grid>
               </Toolbar>
