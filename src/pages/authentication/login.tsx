@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { login } from '../../requests/authentication';
@@ -52,7 +53,12 @@ export interface LoginComponentState {
   isLoading: boolean;
 }
 
+export const L: React.FunctionComponent = (props) => {
+  return <div></div>;
+};
+
 export function LoginComponent(): JSX.Element {
+  const history = useHistory();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const classes = useStyles();
@@ -60,8 +66,10 @@ export function LoginComponent(): JSX.Element {
   function onSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     login({ email: email, password: password })
-      .then((res) => {
-        console.log(res);
+      .then((response) => {
+        const { token } = response.data;
+        localStorage.setItem('token', token);
+        history.push('/dashboard');
       })
       .catch((e) => {
         console.error(e);
@@ -93,7 +101,8 @@ export function LoginComponent(): JSX.Element {
             label="Email Address"
             name="email"
             autoComplete="email"
-            value={setEmail}
+            value={email}
+            onChange={(e: any) => setEmail(e.target.value)}
             autoFocus
           />
           <TextField
@@ -105,7 +114,8 @@ export function LoginComponent(): JSX.Element {
             label="Password"
             type="password"
             id="password"
-            value={setPassword}
+            value={password}
+            onChange={(e: any) => setPassword(e.target.value)}
             autoComplete="current-password"
           />
           <FormControlLabel

@@ -16,6 +16,10 @@ export interface LoginResponse {
   __v: number;
 }
 
+export interface TokenResponse {
+  token: string;
+}
+
 /**
  * get authentication token
  * @param {string} email - email
@@ -23,8 +27,8 @@ export interface LoginResponse {
  */
 export function login(
   params: LoginRequest
-): Promise<AxiosResponse<LoginResponse>> {
-  return axios.request<LoginResponse>({
+): Promise<AxiosResponse<TokenResponse>> {
+  return axios.request<TokenResponse>({
     url: `${API_URL}/users/token`,
     method: 'post',
     headers: {
