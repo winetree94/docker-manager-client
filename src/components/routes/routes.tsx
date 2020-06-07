@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import Authentication from '../../pages/authentication/authentication';
+import Authentication from '../../pages/authentication/signup';
 import { LoginComponent } from '../../pages/authentication/login';
 import Navigation from '../navigation/navigation';
 import { DashboardRoute } from '../main/main';

@@ -25,9 +25,7 @@ export interface TokenResponse {
  * @param {string} email - email
  * @param {string} password - password
  */
-export function login(
-  params: LoginRequest
-): Promise<AxiosResponse<TokenResponse>> {
+export function login(params: LoginRequest): Promise<AxiosResponse<TokenResponse>> {
   return axios.request<TokenResponse>({
     url: `${API_URL}/users/token`,
     method: 'post',
@@ -38,9 +36,6 @@ export function login(
   });
 }
 
-export function register(
-  email: string,
-  password: string
-): Promise<AxiosResponse> {
+export function register(email: string, password: string): Promise<AxiosResponse> {
   return axios.request({});
 }
