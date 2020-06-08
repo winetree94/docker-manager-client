@@ -1,18 +1,22 @@
-import React, { ReactNode, FunctionComponent, useState, MouseEvent } from 'react';
+import React, { FunctionComponent, useState, MouseEvent } from 'react';
 
 export type IPerson = {
   name: string;
   age: number;
-  click?(e: MouseEvent, name: string, age: number): void;
+  onPersonClick?(e: MouseEvent, name: string, age: number): void;
   onRemoveClicked?(e: MouseEvent, name: string, age: number): void;
 };
 
 export const Person: FunctionComponent<IPerson> = (props) => (
   <div>
-    <p onClick={(e: MouseEvent) => (props.click ? props.click(e, props.name, props.age) : undefined)}>
+    <p onClick={(e: MouseEvent) => (props.onPersonClick ? props.onPersonClick(e, props.name, props.age) : undefined)}>
       name : {props.name} / age: {props.age}
     </p>
-    <input type="button" value="remove" onClick={(e: MouseEvent) => (props.onRemoveClicked ? props.onRemoveClicked(e, props.name, props.age) : undefined)} />
+    <input
+      type="button"
+      value="remove"
+      onClick={(e: MouseEvent) => (props.onRemoveClicked ? props.onRemoveClicked(e, props.name, props.age) : undefined)}
+    />
   </div>
 );
 
@@ -28,7 +32,6 @@ export const PersonManager: FunctionComponent<IPersonManager> = (props: IPersonM
 
   const onPersonClicked = (e: MouseEvent, name: string, age: number) => {
     e.preventDefault();
-    console.log(name);
   };
 
   const onAddPersonClicked = (e: MouseEvent, name: string, age: string) => {
@@ -54,8 +57,9 @@ export const PersonManager: FunctionComponent<IPersonManager> = (props: IPersonM
     const person: IPerson = {
       name: name,
       age: parseInt(age),
-      click: onPersonClicked,
+      onPersonClick: onPersonClicked,
     };
+
     setPersons([...persons, person]);
   };
 
@@ -73,7 +77,13 @@ export const PersonManager: FunctionComponent<IPersonManager> = (props: IPersonM
         <input type="button" value="사람 등록" onClick={(e) => onAddPersonClicked(e, name, age)} />
       </div>
       {persons.map((person) => (
-        <Person key={person.name} name={person.name} age={person.age} click={onPersonClicked} onRemoveClicked={onRemovePersonClicked} />
+        <Person
+          key={person.name}
+          name={person.name}
+          age={person.age}
+          onPersonClick={onPersonClicked}
+          onRemoveClicked={onRemovePersonClicked}
+        />
       ))}
     </div>
   );
