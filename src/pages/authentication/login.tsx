@@ -53,10 +53,6 @@ export interface LoginComponentState {
   isLoading: boolean;
 }
 
-export const L: React.FunctionComponent = (props) => {
-  return <div></div>;
-};
-
 export function LoginComponent(): JSX.Element {
   const history = useHistory();
   const [email, setEmail] = useState<string>('');

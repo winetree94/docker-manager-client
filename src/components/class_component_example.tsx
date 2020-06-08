@@ -31,9 +31,24 @@ export type IClassComponentState = {
 };
 
 export class ClassComponent extends Component<IClassComponentProps, IClassComponentState> {
+  /* 엘리먼트 바인딩 */
+  public input = React.createRef<HTMLInputElement>();
+
   public state = {
     name: this.props.name || '',
     age: this.props.age || '',
+  };
+
+  /**
+   * state 순서 보장
+   */
+  public onType = (): void => {
+    this.setState((prevState, props) => {
+      return {
+        name: prevState.name,
+        age: prevState.age + 1,
+      };
+    });
   };
 
   public onButtonClicked = (e: MouseEvent): void => {
@@ -43,7 +58,12 @@ export class ClassComponent extends Component<IClassComponentProps, IClassCompon
   return(): JSX.Element {
     return (
       <div>
-        <input type="text" value={this.state.name} onChange={(e) => this.setState({ name: e.target.value })} />
+        <input
+          type="text"
+          ref={this.input}
+          value={this.state.name}
+          onChange={(e) => this.setState({ name: e.target.value })}
+        />
         <input type="text" value={this.state.age} onChange={(e) => this.setState({ age: e.target.value })} />
         <button onClick={this.onButtonClicked}>button</button>
       </div>

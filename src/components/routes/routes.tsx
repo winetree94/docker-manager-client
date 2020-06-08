@@ -4,6 +4,7 @@ import Authentication from '../../pages/authentication/signup';
 import { LoginComponent } from '../../pages/authentication/login';
 import Navigation from '../navigation/navigation';
 import { DashboardRoute } from '../main/main';
+import { ErrorBoundary } from '../misc/error';
 
 export const PATH = {
   ROOT: '/',
@@ -17,17 +18,19 @@ export class Routes extends React.Component {
   render(): React.ReactNode {
     return (
       <Router>
-        <Switch>
-          <Route exact path={PATH.ROOT}>
-            <Redirect to={PATH.DASHBOARD} />
-          </Route>
-          <Route path={PATH.SIGNUP} component={Authentication} />
-          <Route path={PATH.LOGIN} component={LoginComponent} />
-          <DashboardRoute path={PATH.DASHBOARD} title="dashboard" component={Navigation} />
-          <Route path={PATH.ETC}>
-            <Redirect to={PATH.DASHBOARD} />
-          </Route>
-        </Switch>
+        <ErrorBoundary>
+          <Switch>
+            <Route exact path={PATH.ROOT}>
+              <Redirect to={PATH.DASHBOARD} />
+            </Route>
+            <Route path={PATH.SIGNUP} component={Authentication} />
+            <Route path={PATH.LOGIN} component={LoginComponent} />
+            <DashboardRoute path={PATH.DASHBOARD} title="dashboard" component={Navigation} />
+            <Route path={PATH.ETC}>
+              <Redirect to={PATH.DASHBOARD} />
+            </Route>
+          </Switch>
+        </ErrorBoundary>
       </Router>
     );
   }

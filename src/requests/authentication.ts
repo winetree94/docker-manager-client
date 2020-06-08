@@ -36,6 +36,28 @@ export function login(params: LoginRequest): Promise<AxiosResponse<TokenResponse
   });
 }
 
+export interface TokenValidationRequest {
+  token: string;
+}
+
+export interface TokenValidationResponse {
+  result: boolean;
+}
+
+/**
+ * get token validation result
+ * @param {TokenValidationRequest} params - token
+ */
+export function validateToken(params: TokenValidationRequest): Promise<AxiosResponse<TokenValidationResponse>> {
+  return axios.request<TokenValidationResponse>({
+    url: `${API_URL}/users/token`,
+    method: 'get',
+    headers: {
+      authorization: params.token,
+    },
+  });
+}
+
 export function register(email: string, password: string): Promise<AxiosResponse> {
   return axios.request({});
 }
