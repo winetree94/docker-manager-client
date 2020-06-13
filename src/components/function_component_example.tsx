@@ -126,11 +126,6 @@ export const PersonManager: FunctionComponent<IPersonManager> = (props: IPersonM
   return (
     <div>
       <p>{props.title}</p>
-      <AuthContext.Provider
-        value={{
-          authenticated: true,
-        }}
-      ></AuthContext.Provider>
       <div>
         <input type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
         <input type="number" placeholder="age" value={age} onChange={(e) => setAge(e.target.value)} />

@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
+import { AuthContext } from '../../context/auth_context';
 import axios from 'axios';
 import { login } from '../../requests/authentication';
 
@@ -55,26 +56,28 @@ export interface LoginComponentState {
 
 export function LoginComponent(): JSX.Element {
   const history = useHistory();
+  const context = useContext(AuthContext);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const classes = useStyles();
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-    login({ email: email, password: password })
-      .then((response) => {
-        const { token } = response.data;
-        localStorage.setItem('token', token);
-        history.push('/dashboard');
-      })
-      .catch((e) => {
-        console.error(e);
-      })
-      .finally(() => {
-        setTimeout(() => {
-          console.log('spinner');
-        });
-      });
+    context.login();
+    // login({ email: email, password: password })
+    //   .then((response) => {
+    //     const { token } = response.data;
+    //     localStorage.setItem('token', token);
+    //     history.push('/dashboard');
+    //   })
+    //   .catch((e) => {
+    //     console.error(e);
+    //   })
+    //   .finally(() => {
+    //     setTimeout(() => {
+    //       console.log('spinner');
+    //     });
+    //   });
   }
 
   return (

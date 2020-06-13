@@ -1,4 +1,5 @@
 import React, { Component, MouseEvent } from 'react';
+import { AuthContext } from '../context/auth_context';
 
 export type IPersonProps = {
   name: string;
@@ -33,6 +34,8 @@ export type IClassComponentState = {
 export class ClassComponent extends Component<IClassComponentProps, IClassComponentState> {
   /* 엘리먼트 바인딩 */
   public input = React.createRef<HTMLInputElement>();
+  public static contextType = AuthContext;
+  public context!: React.ContextType<typeof AuthContext>;
 
   public state = {
     name: this.props.name || '',
@@ -53,6 +56,11 @@ export class ClassComponent extends Component<IClassComponentProps, IClassCompon
 
   public onButtonClicked = (e: MouseEvent): void => {
     console.log('clicked');
+  };
+
+  public componentDidMount = () => {
+    console.log('componentDidMount');
+    console.log(this.context);
   };
 
   return(): JSX.Element {

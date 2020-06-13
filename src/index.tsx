@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import './index.sass';
 import * as serviceWorker from './serviceWorker';
 import { Routes } from './components/routes/routes';
+import { App } from './components/app';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Routes />
-  </React.StrictMode>,
+  <StrictMode>
+    <App />
+  </StrictMode>,
   document.getElementById('root')
 );
 

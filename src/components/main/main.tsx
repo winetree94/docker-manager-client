@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 import * as React from 'react';
 import { Route } from 'react-router-dom';
+import { AuthContext } from '../../context/auth_context';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -21,7 +22,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import { Button } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -90,16 +90,17 @@ const useStyles = makeStyles((theme) => ({
 interface IMainContainerProps {
   component: any;
   title: string;
+  authenticate?: boolean;
   path?: string;
   exact?: boolean;
 }
 
-export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (
-  props
-) => {
+export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (props) => {
+  const { component: Component, ...rest } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [authenticated, setAuthenticated] = React.useState(props.authenticate || false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -108,8 +109,6 @@ export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  const { component: Component, ...rest } = props;
 
   return (
     <Route
@@ -136,23 +135,11 @@ export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (
                 >
                   <MenuIcon />
                 </IconButton>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  alignItems="stretch"
-                >
+                <Grid container direction="row" justify="space-between" alignItems="stretch">
                   <Typography variant="h6" noWrap>
                     {rest.title}
                   </Typography>
-                  <Grid
-                    item
-                    xs={6}
-                    container
-                    direction="row"
-                    justify="flex-end"
-                    alignItems="stretch"
-                  >
+                  <Grid item xs={6} container direction="row" justify="flex-end" alignItems="stretch">
                     <IconButton color="inherit" aria-label="open drawer">
                       <MenuIcon />
                     </IconButton>
@@ -175,33 +162,23 @@ export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (
             >
               <div className={classes.toolbar}>
                 <IconButton onClick={handleDrawerClose}>
-                  {theme.direction === 'rtl' ? (
-                    <ChevronRightIcon />
-                  ) : (
-                    <ChevronLeftIcon />
-                  )}
+                  {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </IconButton>
               </div>
               <Divider />
               <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map(
-                  (text, index) => (
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  )
-                )}
+                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                  <ListItem button key={text}>
+                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItem>
+                ))}
               </List>
               <Divider />
               <List>
                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
                   <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
+                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                     <ListItemText primary={text} />
                   </ListItem>
                 ))}
