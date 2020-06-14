@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Authentication from '../../pages/authentication/signup';
 import { LoginComponent } from '../../pages/authentication/login';
-import Navigation from '../navigation/navigation';
+import { Dashboard } from '../navigation/navigation';
 import { DashboardRoute } from '../main/main';
 import { ErrorBoundary } from '../misc/error';
 
@@ -25,7 +25,7 @@ export class Routes extends React.Component {
             </Route>
             <Route path={PATH.SIGNUP} component={Authentication} />
             <Route path={PATH.LOGIN} component={LoginComponent} />
-            <DashboardRoute path={PATH.DASHBOARD} title="dashboard" component={Navigation} />
+            <DashboardRoute path={PATH.DASHBOARD} title="dashboard" component={Dashboard} />
             <Route path={PATH.ETC}>
               <Redirect to={PATH.DASHBOARD} />
             </Route>

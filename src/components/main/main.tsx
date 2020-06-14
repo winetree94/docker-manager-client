@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-import * as React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Route } from 'react-router-dom';
-import { AuthContext } from '../../context/auth_context';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -95,12 +94,11 @@ interface IMainContainerProps {
   exact?: boolean;
 }
 
-export const DashboardRoute: React.StatelessComponent<IMainContainerProps> = (props) => {
+export const DashboardRoute: FunctionComponent<IMainContainerProps> = (props) => {
   const { component: Component, ...rest } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [authenticated, setAuthenticated] = React.useState(props.authenticate || false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
